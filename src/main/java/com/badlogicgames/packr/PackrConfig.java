@@ -68,7 +68,6 @@ public class PackrConfig {
 	public File cacheJre;
 	public List<File> resources;
 	public File outDir;
-	public File platformLibsOutDir;
 	public File iconResource;
 	public String bundleIdentifier;
 
@@ -138,10 +137,6 @@ public class PackrConfig {
 			outDir = commandLine.outDir();
 		}
 
-		if (commandLine.platformLibsOutDir() != null) {
-			platformLibsOutDir = commandLine.platformLibsOutDir();
-		}
-
 		if (commandLine.iconResource() != null) {
 			iconResource = commandLine.iconResource();
 		}
@@ -155,24 +150,14 @@ public class PackrConfig {
 
 		JsonObject json = JsonObject.readFrom(FileUtils.readFileToString(configJson));
 
-		if (json.get("platform") != null) {
-			platform = Platform.byDesc(json.get("platform").asString());
-		}
-		if (json.get("jdk") != null) {
-			jdk = json.get("jdk").asString();
-		}
-		if (json.get("executable") != null) {
-			executable = json.get("executable").asString();
-		}
-		if (json.get("classpath") != null) {
-			classpath = toStringArray(json.get("classpath").asArray());
-		}
+		platform = Platform.byDesc(json.get("platform").asString());
+		jdk = json.get("jdk").asString();
+		executable = json.get("executable").asString();
+		classpath = toStringArray(json.get("classpath").asArray());
 		if (json.get("removelibs") != null) {
 			removePlatformLibs = toStringArray(json.get("removelibs").asArray());
 		}
-		if (json.get("mainclass") != null) {
-			mainClass = json.get("mainclass").asString();
-		}
+		mainClass = json.get("mainclass").asString();
 		if (json.get("vmargs") != null) {
 			List<String> vmArgs = toStringArray(json.get("vmargs").asArray());
 			this.vmArgs = new ArrayList<>();
@@ -193,12 +178,7 @@ public class PackrConfig {
 		if (json.get("resources") != null) {
 			resources = toFileArray(json.get("resources").asArray());
 		}
-		if (json.get("output") != null) {
-			outDir = new File(json.get("output").asString());
-		}
-		if (json.get("libs") != null) {
-			platformLibsOutDir = new File(json.get("libs").asString());
-		}
+		outDir = new File(json.get("output").asString());
 		if (json.get("icon") != null) {
 			iconResource = new File(json.get("icon").asString());
 		}
