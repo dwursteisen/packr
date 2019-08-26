@@ -107,7 +107,6 @@ int main(int argc, char** argv) {
 
 bool loadJNIFunctions(GetDefaultJavaVMInitArgs* getDefaultJavaVMInitArgs, CreateJavaVM* createJavaVM) {
 
-    /* old JDKs */
 	LPCTSTR jvmDLLPath = TEXT("jre\\bin\\server\\jvm.dll");
 
 	HINSTANCE hinstLib = LoadLibrary(jvmDLLPath);
@@ -126,12 +125,6 @@ bool loadJNIFunctions(GetDefaultJavaVMInitArgs* getDefaultJavaVMInitArgs, Create
 				hinstLib = LoadLibrary(jvmDLLPath);
 			}
 		}
-	}
-
-    /* new JDKs */
-	if (hinstLib == nullptr) {
-        jvmDLLPath = TEXT("bin\\server\\jvm.dll");
-        hinstLib = LoadLibrary(jvmDLLPath);
 	}
 
 	if (hinstLib == nullptr) {
